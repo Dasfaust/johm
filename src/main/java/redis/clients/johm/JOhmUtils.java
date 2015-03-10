@@ -288,6 +288,11 @@ public final class JOhmUtils {
                 }
             }
 
+            if (type.equals(UUID.class))
+            {
+            	return UUID.fromString(value);
+            }
+            
             // Raw Collections are unsupported
             if (type.equals(Collection.class)) {
                 return null;
@@ -317,7 +322,8 @@ public final class JOhmUtils {
                     || type.equals(BigInteger.class)
                     || type.equals(String.class)
                     || type.equals(Date.class)
-                    || (type.isEnum() || type.equals(Enum.class))) {
+                    || (type.isEnum() || type.equals(Enum.class))
+                    || type.equals(UUID.class)) {
             } else {
                 throw new JOhmException(field.getType().getSimpleName()
                         + " is not a JOhm-supported Attribute");
