@@ -49,7 +49,7 @@ public final class JOhmUtils {
         }
 
         List<String> ignoredProperties = Arrays.asList(ignoring);
-        for (Field field : model.getClass().getDeclaredFields()) {
+        for (Field field : gatherAllFields(model.getClass())) {
             if (ignoredProperties.contains(field.getName()))
                 continue;
 
@@ -113,7 +113,7 @@ public final class JOhmUtils {
     static void loadId(final Object model, final Long id) {
         if (model != null) {
             boolean idFieldPresent = false;
-            for (Field field : model.getClass().getDeclaredFields()) {
+            for (Field field : gatherAllFields(model.getClass())) {
                 field.setAccessible(true);
                 if (field.isAnnotationPresent(Id.class)) {
                     idFieldPresent = true;
@@ -334,7 +334,7 @@ public final class JOhmUtils {
         static Long checkValidId(final Object model) {
             Long id = null;
             boolean idFieldPresent = false;
-            for (Field field : model.getClass().getDeclaredFields()) {
+            for (Field field : gatherAllFields(model.getClass())) {
                 field.setAccessible(true);
                 if (field.isAnnotationPresent(Id.class)) {
                     Validator.checkValidIdType(field);
